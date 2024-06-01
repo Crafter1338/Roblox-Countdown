@@ -17,7 +17,7 @@
 ## About The Project
 
 This is an OOP based Countdown module for Roblox.
-Copy the code into a roblox module script or use the <a href="module.lua">loadstring module</a>.
+Copy the code into a roblox module script or use the <a href="loadstringModule.lua">loadstring module</a>.
 
 <!-- LIST OF METHODS -->
 ## List of methods:
