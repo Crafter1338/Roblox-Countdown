@@ -70,6 +70,10 @@ function Countdown:Start(...)
 	end)
 end
 
+function Countdown:Restart()
+	self:Start()
+end
+
 function Countdown:Stop()
 	if self.IsRunning then
 		task.cancel(self.RunThread)
