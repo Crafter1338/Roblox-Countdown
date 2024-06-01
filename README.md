@@ -22,16 +22,20 @@
 This is an OOP based Countdown module for Roblox
 
 ## List of methods:
-### Countdown.new(time : number) 
-test
-* Countdown.new(time)
-* Countdown:Start()
-* Countdown:Pause()
-* Countdown:Continue()
-* Countdown:Stop()
-* Countdown:SetTime(newTime)
-* Countdown:ChangeTime(deltaTime)
-
+* **`Countdown.new(startTime : number)`** <br>
+Creates a countdown object with a startTime of `startTime`
+* **`Countdown:Start()`** <br>
+Starts the countdown object
+* **`Countdown:Stop()`** <br>
+Stops a running countdown
+* **`Countdown:Pause()`** <br>
+Pauses a running countdown
+* **`Countdown:Continue()`** <br>
+Continues a paused countdown where it left
+* **`Countdown:SetTime(newTime : number)`** <br>
+Sets the time of the countdown to `newTime`
+* **`Countdown:ChangeTime(deltaTime)`** <br>
+Changes current countdown time by `deltaTime`
 
 <!-- GETTING STARTED -->
 ## Getting Started
