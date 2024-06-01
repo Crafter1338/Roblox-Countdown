@@ -7,10 +7,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-    </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#list-of-methods">List of Methods</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -19,8 +16,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is an OOP based Countdown module for Roblox
+This is an OOP based Countdown module for Roblox.
+Copy the code into a roblox module script or use the <a href="module.lua">loadstring module</a>.
 
+<!-- LIST OF METHODS -->
 ## List of methods:
 * **`Countdown.new(startTime : number)`** <br>
 Creates a countdown object with a startTime of `startTime`
@@ -36,19 +35,6 @@ Continues a paused countdown where it left
 Sets the time of the countdown to `newTime`
 * **`Countdown:ChangeTime(deltaTime)`** <br>
 Changes current countdown time by `deltaTime`
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Do blah blah
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
