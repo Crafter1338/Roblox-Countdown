@@ -27,9 +27,6 @@ Here's why:
 * 3
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -41,10 +38,6 @@ To get a local copy up and running follow these simple example steps.
 ## Usage
 
 Do blah blah
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 
 <!-- CONTRIBUTING -->
@@ -61,7 +54,6 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 ## Contact
@@ -69,4 +61,4 @@ Don't forget to give the project a star! Thanks again!
 Crafter1338 - [@Crafter1338](https://twitter.com/Crafter1338)
 Project Link: [https://github.com/Crafter1338/Roblox-Countdown](https://github.com/Crafter1338/Roblox-Countdown)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">to top</a>)</p>
