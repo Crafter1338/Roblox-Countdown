@@ -1,5 +1,5 @@
 ----Contact:-------------------
---  Crafter1338 (discord)
+--  Crafter1338 (discord, Twitter)
 -------------------------------
 local Countdown = {}
 Countdown.__index = Countdown
@@ -24,6 +24,8 @@ function Countdown.new(maxTime : number, ...)
 		unix   = ((startWithMax == true and 0) or 1)*maxTime,
 		format = format(self.MaxTime)
 	}
+	self.IsPaused   = false
+	self.IsRunning  = false
 	self.Finished = Instance.new("BindableEvent")
 	self.Updated  = Instance.new("BindableEvent")
 
@@ -32,13 +34,13 @@ function Countdown.new(maxTime : number, ...)
 end
 
 function Countdown:Start(...)
-	local args = {...}
-	if self.PauseThread then
-		task.cancel(self.PauseThread)
-	end
+	local StartTick = ({...})[1] or os.time()
+	if self.IsRunning == true then task.cancel(self.RunThread) end
+	if self.IsPaused == true then task.cancel(self.PauseThread); self.IsPaused = false end
 
-	self.Thread = task.spawn(function()
-		self.StartTick = args[1] or os.time()
+	self.IsRunning = true
+	self.RunThread = task.spawn(function()
+		self.StartTick = StartTick
 		while task.wait() do
 			local currentSeconds = os.time() - self.StartTick
 			local remainder 	 = self.MaxTime - currentSeconds
@@ -48,9 +50,7 @@ function Countdown:Start(...)
 					unix   = 0,
 					format = format(0)
 				}
-				self.Updated:Fire()
-				self.Finished:Fire() 
-
+				self.Updated:Fire(); self.Finished:Fire() 
 				return
 			end
 			if remainder ~= self.TimeRemaining.unix then
@@ -59,7 +59,6 @@ function Countdown:Start(...)
 					format = format(remainder)
 				}
 				self.Updated:Fire()
-
 				continue
 			end
 
@@ -72,22 +71,38 @@ function Countdown:Start(...)
 end
 
 function Countdown:Stop()
-	task.cancel(self.Thread)
-	self.Finished:Fire()
+	if self.IsRunning then
+		task.cancel(self.RunThread)
+		self.Finished:Fire()
+	end
 end
 
 function Countdown:Continue()
-	task.cancel(self.PauseThread)
-	self:Start(self.StartTick)
+	if self.IsPaused then
+		task.cancel(self.PauseThread)
+		self:Start(self.StartTick)
+	end
 end
 
 function Countdown:Pause()
-	task.cancel(self.Thread)
+	if self.IsRunning == true then task.cancel(self.RunThread); self.IsPaused = false end
+	if self.IsPaused == true then return end
+
 	self.PauseThread = task.spawn(function()
 		local distance = os.time() - self.StartTick
 
 		while task.wait() do
 			self.StartTick = os.time() - distance
+		end
+	end)
+end
+
+function Countdown:SetTime(t : number)
+	self.MaxTime  = t
+	self.Startick = os.time()
+	task.spawn(function()
+		while self.IsRunning == false do
+			self.Startick = os.time()
 		end
 	end)
 end
