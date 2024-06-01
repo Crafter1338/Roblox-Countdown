@@ -21,10 +21,16 @@
 
 This is an OOP based Countdown module for Roblox
 
-Here's why:
-* 1
-* 2
-* 3
+## List of methods:
+### Countdown.new(time : number) 
+test
+* Countdown.new(time)
+* Countdown:Start()
+* Countdown:Pause()
+* Countdown:Continue()
+* Countdown:Stop()
+* Countdown:SetTime(newTime)
+* Countdown:ChangeTime(deltaTime)
 
 
 <!-- GETTING STARTED -->
