@@ -1,6 +1,7 @@
 <a name="readme-top"></a>
 
-<!-- TABLE OF CONTENTS -->
+<!-- ABOUT THE PROJECT -->
+## About The Project
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -13,10 +14,7 @@
   </ol>
 </details>
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-This is an OOP based Countdown module for Roblox.
+This is an OOP based Countdown module for Roblox. <br>
 Copy the code into a roblox module script or use the <a href="loadstringModule.lua">loadstring module</a>.
 
 <!-- LIST OF METHODS -->
