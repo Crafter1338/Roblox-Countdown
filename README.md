@@ -225,7 +225,7 @@ ___
 ## Events
 
 ### .Updated
-Updated is a bindable event that fires each time the countdown object is updated.
+Updated is a bindable event.Event that gets fired each time the remaining time of the object is updated.
 
 #### Examples
 

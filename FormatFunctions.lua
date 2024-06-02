@@ -1,11 +1,10 @@
 ----THIS IS A MODULE SCRIPT----
 ----Contact:-------------------
---  Crafter1338 (discord, Twitter)
+--  Crafter1338 (Discord, Twitter)
 -------------------------------
 local module = {}
 
 local function addZeros(s) return (s:len() == 1 and "0"..s) or s end
-
 function module.MinSec(counter, remainder)
 	remainder = math.round(remainder)
 	remainder = math.clamp(remainder, 0, math.huge)
@@ -28,7 +27,7 @@ end
 
 function module.MinSecMillis(counter, remainder)
 	if counter.IsMillis == false then counter:SetIsMillis(true) end
-	
+    
 	remainder = math.clamp(remainder, 0, math.huge)
 	local minutes = math.floor(remainder/60)
 	remainder -= minutes*60
