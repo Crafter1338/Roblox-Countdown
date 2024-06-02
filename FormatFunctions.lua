@@ -1,6 +1,6 @@
 ----THIS IS A MODULE SCRIPT----
 ----Contact:-------------------
---  Crafter1338 (discord, Twitter)
+--  Crafter1338 (Discord, Twitter)
 -------------------------------
 local module = {}
 
