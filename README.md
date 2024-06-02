@@ -119,7 +119,7 @@ CountDownObject:Stop() -- Stops the countdown object
 
 ___
 ### Countdown:Restart() ⇾ *`void`*
-Sets the countdown object's time remaining to the time that has last been set by either the used <a href = "#constructor-functions">constructor function</a> or the <a href = "#countdown:settime()">:SetTime()</a> method
+Sets the countdown object's time remaining to the time that has last been set by either the used <a href = "#constructor-functions">constructor function</a> or the <a href = "###Countdown:SetTime(newTime-:-number)">:SetTime()</a> method
 
 #### Code Samples
 
@@ -130,7 +130,7 @@ local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object wi
 
 CountDownObject:Start() -- Starts the countdown object.
 wait(1)
-CountDownObject:Stop() -- Stops the countdown object from running anymore.
+CountDownObject:Stop() -- Stops the countdown object.
 wait(1)
 CountDownObject:Restart() -- Restarts the countdown object.
 ```
@@ -148,7 +148,7 @@ local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object wi
 
 CountDownObject:Start() -- Starts the countdown object.
 wait(1)
-CountDownObject:Pause() -- Pauses the countdown object from running, putting it in a suspended state.
+CountDownObject:Pause() -- Pauses the countdown object.
 ```
 ___
 
@@ -165,9 +165,9 @@ local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object wi
 
 CountDownObject:Start() -- Starts the countdown object.
 wait(1)
-CountDownObject:Pause() -- Pauses the countdown object from running, putting it in a suspended state.
+CountDownObject:Pause() -- Pauses the countdown object.
 wait(3)
-CountDownObject:Continue() -- Continues a suspended countdown object where it was left off previously
+CountDownObject:Continue() -- Continues a paused countdown object where it left off previously
 ```
 ___
 
