@@ -22,17 +22,44 @@ The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done f
 ## Introduction
 blah blah
 
+## Constructor Functions
+### Countdown.newSimple() ⇾ *`Countdown object`*
+| Parameter | Description |
+| --- | --- |
+| **Time** `number` | Starting Time to count down from|
+
+**Example:** Creating a countdown object
+```lua
+local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local CountDownObject = Countdown.newSimple(10)
+-- Creates a countdown object with 10 seconds as its startTime.
+```
+
+### Countdown.newAdvanced() ⇾ *`Countdown object`*
+| Parameters | Description |
+| --- | --- |
+| **Time** `number` | Starting Time to count down from|
+| **FormatFunction** `function` | A custom format function[^Format-Functions]|
+| **IsMillis** `bool`| If `true` Then the preciser time function tick() will be used|
+
+**Example:** Creating an advanced countdown object
+```lua
+local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local CountDownObject = Countdown.newAdvanced(10,FormatFunction,true)
+-- Creates a countdown object with 10 seconds as its startTime and
+-- a custom format function that uses ms precision.
+```
+
+
+
 ## Properties
-
-### TimeRemaining
-
+### .TimeRemaining
 TimeRemaining keeps track of the time remaining untill the countdown is done. TimeRemaining stores that data in two different ways, *`TimeRemaining.format`* and *`TimeRemaining.unix`*.
 
 #### TimeRemaining.format
-`TimeRemaining.format` stores the formatted string of time remaining. `**string**`
+`TimeRemaining.format` stores the formatted string of time remaining. *`string`* <br>
 
-#### Code Example
-Update a StringValue's value using `TimeRemaining.format` <br>
+**Example:** Update a StringValue's value using `TimeRemaining.format` <br>
 ```lua
 local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
@@ -40,15 +67,15 @@ local StringValue = workspace.StringValue
 CountDownObject:Start() -- Starts counting down.
 
 CountDownObject.Updated.Event:Connect(function()
-  StringValue.Value = CountdownObject.TimeRemaining.format -- Set StringValue's value to the formatted time remaining.
+    StringValue.Value = CountdownObject.TimeRemaining.format -- Set StringValue's value to the formatted time remaining.
 end)
 ```
+
+
 #### TimeRemaining.unix
+`TimeRemaining.unix` stores the unformatted number of secconds remaining. *`number`* <br>
 
-`TimeRemaining.unix` stores the unformatted number of secconds remaining. `**number**`
-
-##### Code Example
-Update a NumberValues's value using `TimeRemaining.unix` <br>
+**Example:** Update a NumberValues's value using `TimeRemaining.unix` <br>
 ```lua
 local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
 local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
@@ -56,52 +83,19 @@ local NumberValue = workspace.NumberValue
 CountDownObject:Start() -- Starts counting down.
 
 CountDownObject.Updated.Event:Connect(function()
-  NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
+	NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
 end)
 ```
 ___
 
-<!-- LIST OF METHODS -->
-## Methods
-### Countdown.newSimple() : *`number`*
-Creates a countdown object with a startTime of `maxTime`, but in a simplified way. 
 
-| Parameter | Description |
-| --- | --- |
-| **maxTime:** `number` | The starting point of the countdown object|
 
-** Code Samples **
+## Methods inherited from Countdown
 
-Creating a countdown object
-```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
-```
-___
-
-### Countdown.newAdvanced() : *`number`*,*`functon`*,*`bool`*
-Creates a countdown object with a startTime of `maxTime`, but in an advanced way. 
-
-| Parameters | Description |
-| --- | --- |
-| **maxTime:** `number` | The starting point of the countdown object|
-| **FormatFunction:** `function` | The function that formats information for the countdown object|
-| **IsMillis:** `bool`| If `true` then milliseconds will be formatted|
+### Countdown:Start() ⇾ *`void`*
+Starts the counting down by a countdown object
 
 #### Code Samples
-
-Creating an advanced countdown object
-```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountDownObject = Countdown.newAdvanced(10,FormatFunction,true) -- Creates a countdown object with 10 seconds as its startTime, a formatfunction, and a true booleon for the IsMillis argument.
-```
-___
-
-### Countdown:Start() : *`void`*
-Activates and runs the countdown object
-
-#### Code Samples
-
 Starting a countdown object
 ```lua
 local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
@@ -111,21 +105,21 @@ CountDownObject:Start() -- Starts the countdown object.
 ```
 ___
 
-### Countdown:Stop() : *`void`*
-Stops and puts the countdown object in a dead state.
+### Countdown:Stop() ⇾ *`void`*
+Stops and halts any further counting down by the countdown object.
 
 #### Code Samples
-
 Stopping a countdown object
 ```lua
 local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
 local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
 
-CountDownObject:Stop() -- Stops the countdown object from running anymore.
+CountDownObject:Stop() -- Stops the countdown object
 ```
+
 ___
-### Countdown:Restart() : *`void`*
-Restarts the countdown object from being in a dead state to being back in a running state.
+### Countdown:Restart() ⇾ *`void`*
+Sets the countdown object's time remaining to the time that has last been set by either the used <a href = "#constructor-functions">constructor function</a> or the <a href = "#countdown:settime()">:SetTime()</a> method
 
 #### Code Samples
 
@@ -238,6 +232,8 @@ CountDownObject.Finished.Event:Connect(function()
 end)
 ```
 ___
+
+## Format Functions
 
 ### .Updated
 
