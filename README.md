@@ -65,7 +65,7 @@ local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object wi
 local StringValue = workspace.StringValue
 CountdownObject:Start() -- Starts counting down.
 
-CountdownObject.Updated.Event:Connect(function()
+CountdownObject.Updated:Connect(function()
     StringValue.Value = CountdownObject.TimeRemaining.format -- Set StringValue's value to the formatted time remaining.
 end)
 ```
@@ -84,6 +84,13 @@ CountdownObject.Updated.Event:Connect(function()
     NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
 end)
 ```
+### .IsRunning: *`boolean`*
+IsRunning is true while the timer is counting down
+
+### .IsPaused: *`boolean`*
+IsPaused is true while the timer is paused 
+
+
 ___
 
 
@@ -150,7 +157,7 @@ CountdownObject:Pause() -- Pauses the countdown object.
 ___
 
 ### Countdown:Continue() ⇾ *`void`*
-Continues a suspended countdown object where it was left off previously
+Continues a paused countdown object where it left previously
 
 #### Code Example
 
@@ -228,7 +235,7 @@ local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object wi
 local StringValue = workspace.StringValue
 CountdownObject:Start() -- Starts counting down.
 
-CountdownObject.Updated.Event:Connect(function()
+CountdownObject.Updated:Connect(function()
     StringValue.Value = CountdownObject.TimeRemaining.format -- Set StringValue's value to the formatted time remaining.
 end)
 ```
@@ -238,7 +245,7 @@ local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 CountdownObject:Start() -- Starts counting down.
 
-CountdownObject.Updated.Event:Connect(function()
+CountdownObject.Updated:Connect(function()
     print(CountdownObject.TimeRemaining.format)
 end)
 ```
@@ -252,7 +259,7 @@ Finished is a bindable event that fires whenever the countdown object finishes o
 local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
 
-CountdownObject.Finished.Event:Connect(function()
+CountdownObject.Finished:Connect(function()
     print("Finished!")
 end)
 ```
