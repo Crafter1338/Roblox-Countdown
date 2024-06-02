@@ -2,6 +2,9 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+Roblox Forum post:<br>
+https://devforum.roblox.com/t/timercountdown-module/3000748
+<br>
 <details>
   <summary>Contents</summary>
   <ol>
