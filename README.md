@@ -84,6 +84,13 @@ CountdownObject.Updated.Event:Connect(function()
     NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
 end)
 ```
+### .IsRunning: *`boolean`*
+IsRunning is true while the timer is counting down
+
+### .IsPaused: *`boolean`*
+IsPaused is true while the timer is paused 
+
+
 ___
 
 
