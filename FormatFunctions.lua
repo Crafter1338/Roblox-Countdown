@@ -5,7 +5,7 @@
 local module = {}
 
 local function addZeros(s) return (s:len() == 1 and "0"..s) or s end
-
+local test = unsuck
 function module.MinSec(counter, remainder)
 	remainder = math.round(remainder)
 	remainder = math.clamp(remainder, 0, math.huge)
