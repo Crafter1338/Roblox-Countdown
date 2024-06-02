@@ -3,21 +3,21 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <details>
-  <summary>Table of Contents</summary>
+  <summary>Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li><a href="#list-of-properties">List of Properties</a></li>
-    <li><a href="#list-of-methods">List of Methods</a></li>
-    <li><a href="#list-of-events">List of Events</a></li>
+	<li><a href="#introduction">Introduction</a></li>
+    <li><a href="#constructor-functions">Constructor Functions</a></li>
+    <li><a href="#properties">Properties</a></li>
+    <li><a href="#methods-inherited-from-countdown">Methods</a></li>
+	<li><a href="#events">Events</a></li>
+	<li><a href="#format-functions">Format Functions</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
-This is an OOP based countdown module for Roblox. <br>
-The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done formatting functions are stored in the <a href="FormatFunctions.lua">FormatFunctions.lua</a>
+This is an object oriented countdown module for Roblox. <br>
+The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done formatting functions are stored in the <a href="FormatFunctions.lua">FormatFunctions.lua</a> (See [Formatting Functions](#format-functions) for more information)
 
 ## Introduction
 blah blah
@@ -30,7 +30,7 @@ blah blah
 
 **Example:** Creating a countdown object
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
 -- Creates a countdown object with 10 seconds as its startTime.
 ```
@@ -40,12 +40,14 @@ local CountdownObject = Countdown.newSimple(10)
 | --- | --- |
 | **Time** `number` | Starting Time to count down from|
 | **FormatFunction** `function` | A [custom format function](#format-functions)|
-| **IsMillis** `bool`| If `true` Then the preciser time function tick() will be used|
+| **IsMillis** `bool`| If `true` Then the preciser time function `tick()` will be used|
 
 **Example:** Creating an advanced countdown object
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountdownObject = Countdown.newAdvanced(10,FormatFunction,true)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
+local FormatFunctions = require(ServerStorage.ModuleScripts.FormatFunctions)
+local FormatFunction = FormatFunctions.MinSecMillis
+local CountdownObject = Countdown.newAdvanced(10, FormatFunction, true)
 -- Creates a countdown object with 10 seconds as its startTime and
 -- a custom format function that uses ms precision.
 ```
@@ -61,7 +63,7 @@ TimeRemaining keeps track of the time remaining untill the countdown is done. Ti
 
 **Example:** Update a StringValue's value using `TimeRemaining.format` <br>
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 local StringValue = workspace.StringValue
 CountdownObject:Start() -- Starts counting down.
@@ -77,13 +79,13 @@ end)
 
 **Example:** Update a NumberValues's value using `TimeRemaining.unix` <br>
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 local NumberValue = workspace.NumberValue
 CountdownObject:Start() -- Starts counting down.
 
 CountdownObject.Updated.Event:Connect(function()
-	NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
+    NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
 end)
 ```
 ___
@@ -98,8 +100,8 @@ Starts the counting down by a countdown object
 #### Code Samples
 Starting a countdown object
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
+local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 
 CountdownObject:Start() -- Starts the countdown object.
 ```
@@ -111,10 +113,10 @@ Stops and halts any further counting down by the countdown object.
 #### Code Samples
 Stopping a countdown object
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
+local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 
-CountdownObject:Stop() -- Stops the countdown object
+CountdownObject:Stop() -- Stops the countdown object.
 ```
 
 ___
@@ -125,8 +127,8 @@ Sets the countdown object's time remaining to the time that has last been set by
 
 Restarting a countdown object
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
+local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 
 CountdownObject:Start() -- Starts the countdown object.
 wait(1)
@@ -143,8 +145,8 @@ Temporary suspends a countdown object
 Pausing the countdown object
 
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
+local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 
 CountdownObject:Start() -- Starts the countdown object.
 wait(1)
@@ -160,14 +162,14 @@ Continues a suspended countdown object where it was left off previously
 Continuing a suspended countdown object
 
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
+local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 
 CountdownObject:Start() -- Starts the countdown object.
 wait(1)
 CountdownObject:Pause() -- Pauses the countdown object.
 wait(3)
-CountdownObject:Continue() -- Continues a paused countdown object where it left off previously
+CountdownObject:Continue() -- Continues a paused countdown object where it left off previously.
 ```
 ___
 
@@ -182,21 +184,21 @@ Sets the time of the countdown object to a `newTime`.
 
 Changing the time of the countdown **while** it's running:
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
 
-CountdownObject:SetTime(20) -- The timer will have 20s remaining
+CountdownObject:SetTime(20) -- The timer will have 20s remaining.
 ```
 
 Changing the time of the countdown **while** it's paused:
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
 
-CountdownObject:SetTime(20) -- The timer will have 20s remaining
+CountdownObject:SetTime(20) -- The timer will have 20s remaining.
 CountdownObject:Pause()
 task.wait(5)
-CountdownObject:Continue() -- The timer will continue with 20s since it was paused before waiting 5s
+CountdownObject:Continue() -- The timer will continue with 20s since it was paused before waiting 5s.
 ```
 ___
 
@@ -209,7 +211,7 @@ Changes current countdown time by `deltaTime`
 
 **Example:** Changing the current time of a countdown object by 50s
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
 
 CountdownObject:ChangeTime(50) -- Add 50s to the remaining time.
@@ -226,7 +228,7 @@ Updated is a bindable event that fires each time the countdown object is updated
 #### Examples
 
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 local StringValue = workspace.StringValue
 CountdownObject:Start() -- Starts counting down.
@@ -237,7 +239,7 @@ end)
 ```
 
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 CountdownObject:Start() -- Starts counting down.
 
@@ -252,11 +254,11 @@ Finished is a bindable event that fires whenever the countdown object finishes o
 **Example:** Print 'Finished' whenever the countdown object Finishes <br>
 
 ```lua
-local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
+local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
 
 CountdownObject.Finished.Event:Connect(function()
-  print("Finished")
+    print("Finished!")
 end)
 ```
 ___
