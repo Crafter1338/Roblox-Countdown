@@ -5,22 +5,19 @@
 <details>
   <summary>Contents</summary>
   <ol>
-	<li><a href="#introduction">Introduction</a></li>
-    <li><a href="#constructor-functions">Constructor Functions</a></li>
-    <li><a href="#properties">Properties</a></li>
-    <li><a href="#methods-inherited-from-countdown">Methods</a></li>
+	<!--<li><a href="#introduction">Introduction</a></li>-->
+  	<li><a href="#constructor-functions">Constructor Functions</a></li>
+  	<li><a href="#properties">Properties</a></li>
+   	<li><a href="#methods-inherited-from-countdown">Methods</a></li>
 	<li><a href="#events">Events</a></li>
 	<li><a href="#format-functions">Format Functions</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
+	<li><a href="#contributing">Contributing</a></li>
+	<li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
 This is an object oriented countdown module for Roblox. <br>
 The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done formatting functions are stored in the <a href="FormatFunctions.lua">FormatFunctions.lua</a>
-
-## Introduction
-blah blah
 
 ## Constructor Functions
 ### Countdown.newSimple() ⇾ *`Countdown object`*
