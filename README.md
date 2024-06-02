@@ -157,7 +157,7 @@ CountdownObject:Pause() -- Pauses the countdown object.
 ___
 
 ### Countdown:Continue() ⇾ *`void`*
-Continues a suspended countdown object where it was left off previously
+Continues a paused countdown object where it left previously
 
 #### Code Example
 
