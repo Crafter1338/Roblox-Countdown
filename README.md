@@ -16,54 +16,48 @@
   </ol>
 </details>
 
-HELLO WORLD
+This is an OOP based countdown module for Roblox. <br>
+The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done formatting functions are stored in the <a href="FormatFunctions.lua">FormatFunctions.lua</a>
 
-This is an OOP based Countdown module for Roblox. <br>
-Copy the code into a roblox module script or use the <a href="loadstringModule.lua">loadstring module</a>.
+## Introduction
+blah blah
 
-<!-- LIST OF PROPERTIES -->
 ## Properties
 
 ### TimeRemaining
 
-TimeRemaining holds the value of how much time it'll take until the countdown object is finished. TimeRemaining can share its value in two different ways, *`TimeRemaining.format`* and *`TimeRemaining.unix`*.
+TimeRemaining keeps track of the time remaining untill the countdown is done. TimeRemaining stores that data in two different ways, *`TimeRemaining.format`* and *`TimeRemaining.unix`*.
 
 #### TimeRemaining.format
+`TimeRemaining.format` stores the formatted string of time remaining. `**string**`
 
-`TimeRemaining.format` gives out a string value that's about how much time is remaining. 
-
-##### Code Samples
-
-Constantly updating a stringvalue to keep `TimeRemaining.format`
+#### Code Example
+Update a StringValue's value using `TimeRemaining.format` <br>
 ```lua
 local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local CountdownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 local StringValue = workspace.StringValue
-CountDownObject:Start() -- Starts the countdown object.
+CountDownObject:Start() -- Starts counting down.
 
-function TimeRemainingFormat()
-  StringValue.Value = CountdownObject.TimeRemaining.format -- The StringValue instance's value is set to being the string version of TimeRemaining. This causes the string value to have a value that looks like this: '01:20'
-  wait(1)
-end
-CountDownObject.Updated.Event:Connect(TimeRemainingFormat)
+CountDownObject.Updated.Event:Connect(function()
+  StringValue.Value = CountdownObject.TimeRemaining.format -- Set StringValue's value to the formatted time remaining.
+end)
 ```
 #### TimeRemaining.unix
 
-`TimeRemaining.unix` gives out a number value that's about how much time is remaining.
+`TimeRemaining.unix` stores the unformatted number of secconds remaining. `**number**`
 
-##### Code Samples
-Constantly updating a numbervalue to keep `TimeRemaining.unix`
+##### Code Example
+Update a NumberValues's value using `TimeRemaining.unix` <br>
 ```lua
 local Countdown = Require(ServerStorage.ModuleScripts.Countdown)
-local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object with 10 seconds as its startTime.
+local CountDownObject = Countdown.newSimple(10) -- Creates a countdown object with a 10 seconds timer.
 local NumberValue = workspace.NumberValue
-CountDownObject:Start() -- Starts the countdown object.
+CountDownObject:Start() -- Starts counting down.
 
-function TimeRemainingUnix()
-  StringValue.Value = CountdownObject.TimeRemaining.unix -- The NumberValue instance's value is set to being the number version of TimeRemaining. This causes the number value to have a value that looks like this: '10'
-  wait(1)
-end
-CountDownObject.Updated.Event:Connect(TimeRemainingUnix)
+CountDownObject.Updated.Event:Connect(function()
+  NumberValue.Value = CountdownObject.TimeRemaining.unix -- Set NumberValue's value to the unformatted number of seconds remaining.
+end)
 ```
 ___
 
