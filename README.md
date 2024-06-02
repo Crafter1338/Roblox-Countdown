@@ -261,7 +261,7 @@ ___
 
 
 ## Format Functions
-You can use format functions in the [Countdown.newAdvanced()]() Constructor as explained in that section
+You can use format functions in the [Countdown.newAdvanced()](#constructor-functions) Constructor as explained in that section
 
 | Argument | Description |
 | --- | --- |
