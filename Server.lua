@@ -1,10 +1,9 @@
 local module = require(script.Countdown)
-
-local count = module.new(160)
+local count = module.simpleNew(160)
 count:Start()
 
 count.Updated.Event:Connect(function()
-	  print(count.TimeRemaining.unix)
+    print(count.TimeRemaining.unix)
 end)
 
 count.Finished.Event:Connect(function()
