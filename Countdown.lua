@@ -1,6 +1,6 @@
 ----THIS IS A MODULE SCRIPT----
 ----Contact:-------------------
---  Crafter1338 (discord, Twitter)
+--  Crafter1338 (Discord, Twitter)
 -------------------------------
 local Countdown = {}
 Countdown.__index = Countdown
@@ -47,9 +47,11 @@ function Countdown:Start(...)
 	if self.IsRunning == true then task.cancel(self.RunThread) end
 	if self.IsPaused == true then task.cancel(self.PauseThread); self.IsPaused = false end
 
+	while StartTick == self.TimeFunc() do wait() end
+
 	self.IsRunning = true
+	self.StartTick = StartTick + 1
 	self.RunThread = task.spawn(function()
-		self.StartTick = StartTick
 		while task.wait() do
 			local currentSeconds = self.TimeFunc() - self.StartTick
 			local remainder 	 = self.MaxTime - currentSeconds
@@ -86,6 +88,11 @@ end
 function Countdown:Stop()
 	if self.IsRunning then
 		task.cancel(self.RunThread)
+		self.TimeRemaining = {
+			unix   = 0,
+			format = self.FormatFunc(self, 0)
+		}
+		self._Updated:Fire()
 		self._Finished:Fire()
 	end
 end
@@ -98,8 +105,9 @@ function Countdown:Continue()
 end
 
 function Countdown:Pause()
-	if self.IsRunning == true then task.cancel(self.RunThread); self.IsPaused = false end
 	if self.IsPaused == true then return end
+	if self.IsRunning == true then task.cancel(self.RunThread); self.IsRunning = false end
+	self.IsPaused = true
 
 	self.PauseThread = task.spawn(function()
 		local distance = self.TimeFunc() - self.StartTick
@@ -112,12 +120,7 @@ end
 
 function Countdown:SetTime(t : number)
 	self.MaxTime  = t
-	self.Startick = self.TimeFunc()
-	task.spawn(function()
-		while self.IsRunning == false do
-			self.Startick = self.TimeFunc()
-		end
-	end)
+	self:Start()
 end
 
 function Countdown:ChangeTime(delta)
