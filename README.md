@@ -17,7 +17,7 @@
 </details>
 
 This is an object oriented countdown module for Roblox. <br>
-The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done formatting functions are stored in the <a href="FormatFunctions.lua">FormatFunctions.lua</a> (See [Formatting Functions](#format-functions) for more information)
+The main module is <a href="Countdown.lua">Countdown.lua</a> and some pre-done formatting functions are stored in the <a href="FormatFunctions.lua">FormatFunctions.lua</a>
 
 ## Introduction
 blah blah
@@ -32,7 +32,7 @@ blah blah
 ```lua
 local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
--- Creates a countdown object with 10 seconds as its startTime.
+-- Creates a countdown object with a 10 seconds timer.
 ```
 
 ### Countdown.newAdvanced() ⇾ *`Countdown object`*
@@ -48,7 +48,7 @@ local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local FormatFunctions = require(ServerStorage.ModuleScripts.FormatFunctions)
 local FormatFunction = FormatFunctions.MinSecMillis
 local CountdownObject = Countdown.newAdvanced(10, FormatFunction, true)
--- Creates a countdown object with 10 seconds as its startTime and
+-- Creates a countdown object with a 10 seconds timer and
 -- a custom format function that uses ms precision.
 ```
 
@@ -73,7 +73,6 @@ CountdownObject.Updated.Event:Connect(function()
 end)
 ```
 
-
 #### TimeRemaining.unix
 `TimeRemaining.unix` stores the unformatted number of secconds remaining. *`number`* <br>
 
@@ -93,11 +92,10 @@ ___
 
 
 ## Methods inherited from Countdown
-
 ### Countdown:Start() ⇾ *`void`*
 Starts the counting down by a countdown object
 
-#### Code Samples
+#### Code Example
 Starting a countdown object
 ```lua
 local Countdown = require(ServerStorage.ModuleScripts.Countdown)
@@ -110,7 +108,7 @@ ___
 ### Countdown:Stop() ⇾ *`void`*
 Stops and halts any further counting down by the countdown object.
 
-#### Code Samples
+#### Code Example
 Stopping a countdown object
 ```lua
 local Countdown = require(ServerStorage.ModuleScripts.Countdown)
@@ -123,7 +121,7 @@ ___
 ### Countdown:Restart() ⇾ *`void`*
 Sets the countdown object's time remaining to the time that has last been set by either the used <a href = "#constructor-functions">constructor function</a> or the <a href = "#countdownsettimenewtime--number--void">:SetTime()</a> method
 
-#### Code Samples
+#### Code Example
 
 Restarting a countdown object
 ```lua
@@ -140,7 +138,7 @@ ___
 
 ### Countdown:Pause() ⇾ *`void`*
 Temporary suspends a countdown object
-#### Code Samples
+#### Code Example
 
 Pausing the countdown object
 
@@ -157,7 +155,7 @@ ___
 ### Countdown:Continue() ⇾ *`void`*
 Continues a suspended countdown object where it was left off previously
 
-#### Code Samples
+#### Code Example
 
 Continuing a suspended countdown object
 
@@ -169,7 +167,7 @@ CountdownObject:Start() -- Starts the countdown object.
 wait(1)
 CountdownObject:Pause() -- Pauses the countdown object.
 wait(3)
-CountdownObject:Continue() -- Continues a paused countdown object where it left off previously.
+CountdownObject:Continue() -- Continues a paused countdown object where it left previously.
 ```
 ___
 
@@ -180,9 +178,9 @@ Sets the time of the countdown object to a `newTime`.
 | --- | --- |
 | **newTime:** `number` | The set of a time for the countdown object |
 
-#### Code Samples
+#### Code Examples
 
-Changing the time of the countdown **while** it's running:
+Changing the time of the countdown while it's **running**:
 ```lua
 local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
@@ -190,7 +188,7 @@ local CountdownObject = Countdown.newSimple(10)
 CountdownObject:SetTime(20) -- The timer will have 20s remaining.
 ```
 
-Changing the time of the countdown **while** it's paused:
+Changing the time of the countdown while it's **paused**:
 ```lua
 local Countdown = require(ServerStorage.ModuleScripts.Countdown)
 local CountdownObject = Countdown.newSimple(10)
@@ -207,7 +205,7 @@ Changes current countdown time by `deltaTime`
 
 | Parameter | Description |
 | --- | --- |
-| **deltaTime:** `number` | adds/subtracts deltaTime from the remaining time |
+| **deltaTime:** `number` | Adds/subtracts deltaTime from the remaining time |
 
 **Example:** Changing the current time of a countdown object by 50s
 ```lua
@@ -266,8 +264,46 @@ ___
 
 
 ## Format Functions
+You can use format functions in the [Countdown.newAdvanced()]() Constructor as explained in that section
 
+| Argument | Description |
+| --- | --- |
+| **CountdownObject:** `Countdown object` | The Countdown inheriting object that calls the function |
+| **remainder:** `number` | TimeRemaining.unix of said object |
 
+### Function Format
+```lua
+local function format(CountdownObject, remainder)
+    local s = "formatted string"
+
+    return s
+end
+```
+
+### Examples
+```lua
+local function format(CountdownObject, remainder)
+    local s = toString(remainder)
+
+    return s
+end
+
+local count = require("game.ServerStorage.Countdown").newAdvanced(100, format, false)
+count:Start()
+```
+
+In [FormatFunctions.lua](FormatFunctions.lua) you can see more examples of functions. <br>
+You can use them by doing the following:
+
+```lua
+local FormatFunctions = require("game.ServerStorage.FormatFunctions")
+local format = FormatFunctions.MinSecMillis
+
+local count = require("game.ServerStorage.Countdown").newAdvanced(100, format, true)
+count:Start()
+```
+
+In this example the counter will also count milliseconds and therefore also update every millisecond (or as fast as possible)
 
 
 ___
