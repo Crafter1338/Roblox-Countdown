@@ -31,8 +31,10 @@ function Countdown.newAdvanced(maxTime : number, FormatFunction, IsMillis : bool
 	}
 	self.IsPaused   = false
 	self.IsRunning  = false
-	self.Finished   = Instance.new("BindableEvent")
-	self.Updated    = Instance.new("BindableEvent")
+	self._Finished  = Instance.new("BindableEvent")
+	self._Updated   = Instance.new("BindableEvent")
+	self.Finished   = self._Finished.Event
+	self.Updated    = self._Updated.Event
 	self.TimeFunc	= (IsMillis == true and tick) or os.time
 	self.FormatFunc = FormatFunction
 
@@ -57,7 +59,7 @@ function Countdown:Start(...)
 					unix   = 0,
 					format = self.FormatFunc(self, 0)
 				}
-				self.Updated:Fire(); self.Finished:Fire() 
+				self._Updated:Fire(); self._Finished:Fire() 
 				return
 			end
 			if remainder ~= self.TimeRemaining.unix then
@@ -65,7 +67,7 @@ function Countdown:Start(...)
 					unix   = remainder,
 					format = self.FormatFunc(self, remainder)
 				}
-				self.Updated:Fire()
+				self._Updated:Fire()
 				continue
 			end
 
@@ -84,7 +86,7 @@ end
 function Countdown:Stop()
 	if self.IsRunning then
 		task.cancel(self.RunThread)
-		self.Finished:Fire()
+		self._Finished:Fire()
 	end
 end
 
