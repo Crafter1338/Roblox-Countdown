@@ -28,7 +28,7 @@ end
 
 function module.MinSecMillis(counter, remainder)
 	if counter.IsMillis == false then counter:SetIsMillis(true) end
-	
+    
 	remainder = math.clamp(remainder, 0, math.huge)
 	local minutes = math.floor(remainder/60)
 	remainder -= minutes*60
