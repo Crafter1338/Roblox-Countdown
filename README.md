@@ -8,7 +8,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
+    <li><a href="#list-of-properties">List of Properties</a></li>
     <li><a href="#list-of-methods">List of Methods</a></li>
+    <li><a href="#list-of-events">List of Events</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -17,7 +19,7 @@
 This is an OOP based Countdown module for Roblox. <br>
 Copy the code into a roblox module script or use the <a href="loadstringModule.lua">loadstring module</a>.
 
-<!-- LIST OF METHODS -->
+<!-- LIST OF PROPERTIES -->
 ## Properties
 
 ### TimeRemaining
@@ -63,7 +65,7 @@ CountDownObject.Updated.Event:Connect(TimeRemainingUnix)
 ```
 ___
 
-
+<!-- LIST OF METHODS -->
 ## Methods
 ### Countdown.newSimple() : *`number`*
 Creates a countdown object with a startTime of `maxTime`, but in a simplified way. 
@@ -217,6 +219,7 @@ CountDownObject:ChangeTime(delta) -- Changes the time of the countdown object by
 ```
 ___
 
+<!-- LIST OF EVENTS -->
 ## Events
 
 ### .Finished
