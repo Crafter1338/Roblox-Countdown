@@ -15,10 +15,6 @@ end
 local Timer = {}
 Timer.__index = Timer
 
-function Timer.CreateFormatFunction(Format : string)
-
-end
-
 function Timer.new(FormatFunction) FormatFunction = FormatFunction or simpleFormatFunction
 	local self			= setmetatable({}, Timer)
 	self.FormatFunction = FormatFunction
@@ -44,9 +40,10 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 	self.StartTime = StartTime
 	self.Multiplier= Multiplier
 	self.IsRunning = true
-
+	
+	task.wait(tick() - math.floor(tick()))
 	self.RunThread = task.spawn(function()
-		self.StartUnix = (args[1] or os.time())
+		self.StartUnix = (args[1] or os.time()) + 1
 		while self.IsRunning == true do
 			local runTime = os.time() - self.StartUnix
 			local seconds = (self.EndTime > self.StartTime and math.abs(runTime*self.Multiplier)) or (self.StartTime - math.abs(runTime*self.Multiplier))
@@ -74,7 +71,6 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 
 			if seconds ~= self.Time.Seconds then
 				self.Time = {Seconds = seconds, Format = self.FormatFunction(self, seconds)}
-				print(self.Time.Seconds)
 				self._INTERNAL_Updated:Fire()
 
 				continue

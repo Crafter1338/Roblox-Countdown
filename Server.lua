@@ -1,11 +1,11 @@
-local module = require(script.Countdown)
-local count = module.simpleNew(160)
-count:Start()
+local module = require(script.Timer)
+local timer = module.new()
+timer:Start(100)
 
-count.Updated.Event:Connect(function()
-    print(count.TimeRemaining.unix)
+timer.Updated.Event:Connect(function()
+    print(timer.Time.Format)
 end)
 
-count.Finished.Event:Connect(function()
-    print("Countdown finished!")
+timer.Finished.Event:Connect(function()
+    print("Timer finished!")
 end)
