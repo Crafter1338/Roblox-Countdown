@@ -81,6 +81,8 @@ function Countdown:Start(...)
 	end)
 end
 
+print(test)
+
 function Countdown:Restart()
 	self:Start()
 end
