@@ -28,7 +28,7 @@ The FormatFunction gets passed the following arguments:
 | `timer` | `timer object` |   |
 | `remainder` | `number` | Time left to reach [EndTime](#properties) (in seconds) |
 
-Your function has to return a `string` which will then be seen in Timer.Time.Format
+Your function has to return a `string` which will then be seen in Timer.Time.Format. 
 If you don't pass your own custom function, the function down below will be used.
 
 ```lua
