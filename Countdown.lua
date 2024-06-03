@@ -19,10 +19,9 @@ function Timer.CreateFormatFunction(Format : string)
 
 end
 
-function Timer.new(...)
-	local arguments 	= {...}
+function Timer.new(FormatFunction) FormatFunction = FormatFunction or simpleFormatFunction
 	local self			= setmetatable({}, Timer)
-	self.FormatFunction = arguments[1] or simpleFormatFunction
+	self.FormatFunction = FormatFunction
 	self.IsRunning 	    = false
 	self.IsPaused       = false
 	self.Time 			= {Seconds = 0, Format = "nil"}
@@ -47,21 +46,20 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 	self.IsRunning = true
 
 	self.RunThread = task.spawn(function()
-		self.StartUnix = (args[1] or tick()) + 1
+		self.StartUnix = (args[1] or os.time())
 		while self.IsRunning == true do
-			local runTime = tick() - self.StartUnix
+			local runTime = os.time() - self.StartUnix
 			local seconds = (self.EndTime > self.StartTime and math.abs(runTime*self.Multiplier)) or (self.StartTime - math.abs(runTime*self.Multiplier))
 
 			local e = false
-
 			if self.EndTime > self.StartTime then
-				if self.FormatFunction(self, seconds) == self.FormatFunction(self, self.EndTime) then
+				if seconds >= self.EndTime then
 					self.Time = {Seconds = self.EndTime, Format = self.FormatFunction(self, self.EndTime)}
 					e = true
 				end
 			else
-				if self.FormatFunction(self, seconds) == self.FormatFunction(self, 0) then
-					self.Time = {Seconds = 0, Format = self.FormatFunction(self, 0)}
+				if seconds <= self.EndTime then
+					self.Time = {Seconds = self.EndTime, Format = self.FormatFunction(self, self.EndTime)}
 					e = true
 				end
 			end
@@ -70,12 +68,13 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 				self.IsRunning = false
 				self._INTERNAL_Updated:Fire()
 				self._INTERNAL_Finished:Fire()
-
+				
 				return
 			end
 
-			if tostring(self.Time.Format) ~= tostring(self.FormatFunction(self, seconds)) then
+			if seconds ~= self.Time.Seconds then
 				self.Time = {Seconds = seconds, Format = self.FormatFunction(self, seconds)}
+				print(self.Time.Seconds)
 				self._INTERNAL_Updated:Fire()
 
 				continue
@@ -87,11 +86,6 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 	end)
 end
 
-function Timer:ChangeTime(Delta : number)
-	if self.IsRunning == false then return end
-	self.StartUnix -= Delta
-end
-
 function Timer:Pause()
 	if self.IsRunning == false then return end
 	if self.PauseThread then task.cancel(self.PauseThread) end
@@ -100,11 +94,11 @@ function Timer:Pause()
 	self.IsRunning = false
 	self.IsPaused = true
 
-	local pauseUnix = tick()
+	local pauseUnix = os.time()
 	local startUnix = self.StartUnix
 	self.PauseThread = task.spawn(function()
 		while self.IsPaused == true do
-			local pauseTime = tick() - pauseUnix
+			local pauseTime = os.time() - pauseUnix
 			self.StartUnix  = startUnix + pauseTime
 			task.wait()
 		end
@@ -119,6 +113,12 @@ function Timer:Resume()
 	self.IsPaused = false
 
 	self:Start(self.StartTime, self.EndTime, self.Multiplier, self.StartUnix)
+end
+
+
+function Timer:ChangeTime(Delta : number)
+	if self.IsRunning == false then return end
+	self.StartUnix += Delta
 end
 
 function Timer:Stop()
