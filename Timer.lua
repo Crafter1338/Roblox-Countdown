@@ -1,5 +1,5 @@
-----THIS IS A MODULE SCRIPT----
 ----Contact:-------------------
+--  This is a module script
 --  Crafter1338 (Discord, Twitter)
 -------------------------------
 local function simpleFormatFunction(Timer, Remainder)
@@ -43,7 +43,7 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 	
 	task.wait(tick() - math.floor(tick()))
 	self.RunThread = task.spawn(function()
-		self.StartUnix = (args[1] or os.time()) + 1
+		self.StartUnix = (args[1] or os.time())
 		while self.IsRunning == true do
 			local runTime = os.time() - self.StartUnix
 			local seconds = (self.EndTime > self.StartTime and math.abs(runTime*self.Multiplier)) or (self.StartTime - math.abs(runTime*self.Multiplier))
@@ -65,7 +65,7 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 				self.IsRunning = false
 				self._INTERNAL_Updated:Fire()
 				self._INTERNAL_Finished:Fire()
-				
+
 				return
 			end
 
