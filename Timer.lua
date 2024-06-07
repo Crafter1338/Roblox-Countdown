@@ -4,13 +4,14 @@
 -------------------------------
 local function simpleFormatFunction(Timer, Remainder)
 	local function addZeros(s) return (s:len() == 1 and "0"..s) or s end
-	Remainder = math.round(Remainder)
+	Remainder = math.ceil(Remainder)
 	Remainder = math.clamp(Remainder, 0, math.huge)
 	local minutes = math.floor(Remainder/60)
 	Remainder -= minutes*60
 
 	return addZeros(tostring(minutes))..":"..addZeros(tostring(Remainder))
 end
+local RunService = game:GetService("RunService")
 
 local Timer = {}
 Timer.__index = Timer
@@ -21,6 +22,7 @@ function Timer.new(FormatFunction) FormatFunction = FormatFunction or simpleForm
 	self.IsRunning 	    = false
 	self.IsPaused       = false
 	self.Time 			= {Seconds = 0, Format = "nil"}
+	self.Runtime		= 0
 
 	self._INTERNAL_Finished = Instance.new("BindableEvent")
 	self._INTERNAL_Updated  = Instance.new("BindableEvent")
@@ -31,22 +33,26 @@ function Timer.new(FormatFunction) FormatFunction = FormatFunction or simpleForm
 end
 
 function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, ...)
-	if self.RunThread then task.cancel(self.RunThread) end
+	if self.RunThread then self.RunThread:Disconnect() end
 	local args 	= ({...})
 	EndTime 	= EndTime or 0
 	Multiplier 	= Multiplier or 1
 
-	self.EndTime   = EndTime
-	self.StartTime = StartTime
-	self.Multiplier= Multiplier
-	self.IsRunning = true
+	self.EndTime    = EndTime
+	self.StartTime  = StartTime
+	self.Multiplier = Multiplier
+	self.IsRunning  = true
+	self.Runtime 	= args[1] or 0
 	
-	task.wait(tick() - math.floor(tick()))
-	self.RunThread = task.spawn(function()
-		self.StartUnix = (args[1] or os.time())
-		while self.IsRunning == true do
-			local runTime = os.time() - self.StartUnix
-			local seconds = (self.EndTime > self.StartTime and math.abs(runTime*self.Multiplier)) or (self.StartTime - math.abs(runTime*self.Multiplier))
+	self.RunThread = RunService.Heartbeat:Connect(function(d)
+		if not self.IsPaused then
+			self.Runtime += d
+		end
+	end)
+	
+	task.spawn(function()
+		while self.IsRunning == true and task.wait() do
+			local seconds = (self.EndTime > self.StartTime and math.abs(self.Runtime*self.Multiplier)) or (self.StartTime - math.abs(self.Runtime*self.Multiplier))
 
 			local e = false
 			if self.EndTime > self.StartTime then
@@ -69,7 +75,7 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 				return
 			end
 
-			if seconds ~= self.Time.Seconds then
+			if self.FormatFunction(self, seconds) ~= self.Time.Format then
 				self.Time = {Seconds = seconds, Format = self.FormatFunction(self, seconds)}
 				self._INTERNAL_Updated:Fire()
 
@@ -77,44 +83,36 @@ function Timer:Start(StartTime : number, EndTime : number, Multiplier : number, 
 			end
 
 			self.Time = {Seconds = seconds, Format = self.FormatFunction(self, seconds)}
-			task.wait()
 		end
 	end)
 end
 
-function Timer:Pause()
+function Timer:Pause(Time)
 	if self.IsRunning == false then return end
-	if self.PauseThread then task.cancel(self.PauseThread) end
-	task.cancel(self.RunThread)
+	Time = Time or 0
+	self.RunThread:Disconnect()
 
 	self.IsRunning = false
 	self.IsPaused = true
-
-	local pauseUnix = os.time()
-	local startUnix = self.StartUnix
-	self.PauseThread = task.spawn(function()
-		while self.IsPaused == true do
-			local pauseTime = os.time() - pauseUnix
-			self.StartUnix  = startUnix + pauseTime
-			task.wait()
-		end
-	end)
+	
+	if Time ~= 0 then
+		task.delay(Time + 0.001, function() self:Resume() end)
+	end
 end
 
 function Timer:Resume()
 	if self.IsRunning == true then return end
 	if self.IsPaused  == false then return end
-	if self.PauseThread then task.cancel(self.PauseThread) end
 
+	print(self.Runtime)
 	self.IsPaused = false
-
-	self:Start(self.StartTime, self.EndTime, self.Multiplier, self.StartUnix)
+	self:Start(self.StartTime, self.EndTime, self.Multiplier, self.Runtime)
 end
 
 
 function Timer:ChangeTime(Delta : number)
 	if self.IsRunning == false then return end
-	self.StartUnix += Delta
+	self.Runtime += Delta
 end
 
 function Timer:Stop()
